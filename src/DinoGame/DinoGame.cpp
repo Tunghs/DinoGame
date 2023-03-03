@@ -5,12 +5,97 @@
 #include <conio.h> // 키보드 입력
 #include <Windows.h> // 시스템 함수
 
+#include<dos.h>
+
 int main()
 {
+    
+}
+
+int ChatGPT() {
     std::cout << "Welcome to Dino Game!" << std::endl;
     std::cout << "Press any key to start" << std::endl;
 
     _getch();
+
+    bool gameOver = false; // 게임 종료 여부
+
+    int score = 0; // 점수
+
+    int dinoX = 5; // 공룡 X 좌표
+    int dinoY = 20; // 공룡 Y 좌표
+
+    int cactusX = 80; // 장애물 X 좌표
+    int cactusY = 20; // 장애물 Y 좌표
+
+    while (!gameOver)
+    {
+        // 장애물 이동
+        cactusX--;
+
+        // 사용자 입력 받기
+        if (_kbhit())
+        {
+            char ch = _getch();
+            if (ch == ' ')
+            {
+                // 공룡 점프
+                dinoY--;
+            }
+        }
+
+        // 충돌 판정
+        if (dinoX + 4 >= cactusX && dinoX <= cactusX + 6 && dinoY + 2 >= cactusY)
+        {
+            gameOver = true;
+        }
+
+        // 화면 출력
+        system("cls"); // 이전 화면 지우기
+
+        // 공룡 출력
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                std::cout << " ";
+                if (i == 2 && j == 2)
+                {
+                    std::cout << "O";
+                }
+            }
+            std::cout << std::endl;
+        }
+
+        // 장애물 출력
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                std::cout << " ";
+                if (i == 2 && (j == 1 || j == 5))
+                {
+                    std::cout << "#";
+                }
+            }
+            std::cout << std::endl;
+        }
+
+        // 점수 출력
+        std::cout << "Score: " << score << std::endl;
+
+        // 0.1초 대기
+        Sleep(100);
+
+        // 점수 증가
+        score++;
+    }
+
+    // 게임 종료
+    std::cout << "Game Over!" << std::endl;
+    std::cout << "Your score is " << score << std::endl;
+
+    return 0;
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
